@@ -4,7 +4,9 @@ const client = new Discord.Client();
 const fs = require('fs');
 
 const input = $('#input');
-const div = $('#testdiv');
+const guild_div = $('#guilds');
+const channel_div = $('#channels');
+const message_div = $('#messages');
 
 let currentGuild, currentChannel;
 
@@ -16,17 +18,18 @@ input.keyup(event => {
 });
 
 function updateGuilds() {
-	div.val('');
-	div.append('guilds:');
-	console.log(client.guilds.size);
-	for (const [id, g] of client.guilds) {
-		console.log(g.name);
-		let k = div.append('<button id="' + g.id + '">' + g.name + '</button>');
-		k.click(() => {
+	guild_div.val('');
+	guild_div.append('guilds:');
+	let guild_buttons = [], channel_buttons = [];
+	for (const [g_id, g] of client.guilds) {
+		guild_buttons.push(guild_div.append('<button id="' + g.id + '">' + g.name + '</button>'));
+		guild_buttons[guild_buttons.length - 1].click(() => {
 			currentGuild = g;
-			for (let c in g.channels.values()) {
-				let j = div.append('<button id="' + c.id + '">' + c.name + '</button>');
-				j.click(() => {
+			channel_div.val('');
+			channel_div.append('channels:');
+			for (const [c_id, c] of g.channels) {
+				channel_buttons.push(channel_div.append('<button id="' + c.id + '">' + c.name + '</button>'));
+				channel_buttons[channel_buttons.length - 1].click(() => {
 					currentChannel = c;
 				});
 			}
@@ -35,7 +38,7 @@ function updateGuilds() {
 }
 
 client.on('message', msg => {
-	div.append('<p>' + msg.content + '</p>');
+	message_div.append('<br>' + msg.content);
 });
 
 client.on('guildCreate', g => {
