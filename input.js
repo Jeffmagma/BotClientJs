@@ -18,12 +18,13 @@ input.keyup(event => {
 function updateGuilds() {
 	div.val('');
 	div.append('guilds:');
-	div.append(client.guilds.first().name);
-	for (let g in client.guilds) {
+	console.log(client.guilds.size);
+	for (const [id, g] of client.guilds) {
+		console.log(g.name);
 		let k = div.append('<button id="' + g.id + '">' + g.name + '</button>');
 		k.click(() => {
 			currentGuild = g;
-			for (let c in g.channels) {
+			for (let c in g.channels.values()) {
 				let j = div.append('<button id="' + c.id + '">' + c.name + '</button>');
 				j.click(() => {
 					currentChannel = c;
@@ -38,17 +39,16 @@ client.on('message', msg => {
 });
 
 client.on('guildCreate', g => {
-	alert(g.name);
 	updateGuilds();
 });
 
 client.on('guildDelete', g => {
-	alert(g.name);
 	updateGuilds();
 });
 
 client.on('ready', () => {
 	client.user.setActivity("EDEN", {type: "LISTENING"});
+	updateGuilds();
 });
 
 const token = fs.readFileSync('.auth', 'utf8');

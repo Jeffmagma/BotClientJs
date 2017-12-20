@@ -8,6 +8,7 @@ function createWindow() {
     let win = new BrowserWindow({width: 800, height: 600, show: false});
 	win.loadURL('file://' + __dirname + '/modal.html');
 	win.setMenu(null);
+	win.toggleDevTools();
 
     win.on('closed', () => {
         win = null;
