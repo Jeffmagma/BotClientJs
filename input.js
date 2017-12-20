@@ -6,6 +6,8 @@ const fs = require('fs');
 const input = $('#input');
 const div = $('#testdiv');
 
+let currentGuild, currentChannel;
+
 input.keyup(event => {
 	if (event.keyCode === 13) {
 		client.guilds.first().defaultChannel.send(input.val());
@@ -26,13 +28,15 @@ client.on('message', msg => {
 	div.append('<p>' + msg.content + '</p>')
 });
 
-client.on('guildCreate', async g => {
+client.on('guildCreate', g => {
+	updateGuilds();
 	alert(g.name);
 });
 
-client.on('guildDelete', async g => {
+client.on('guildDelete', g => {
+	updateGuilds();
 	alert(g.name);
 });
 
 const token = fs.readFileSync('.auth', 'utf8');
-client.login(token);
+client.login(token.toString());
