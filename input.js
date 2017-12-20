@@ -19,23 +19,32 @@ function updateGuilds() {
 	div.val('');
 	div.append('guilds:');
 	div.append(client.guilds.first().name);
-	for (let c in client.guilds) {
-		div.append('<button id="' + c.id + '">' + c.name + '</button>')
+	for (let g in client.guilds) {
+		let k = div.append('<button id="' + g.id + '">' + g.name + '</button>');
+		k.click(() => {
+			currentGuild = g;
+			for (let c in g.channels) {
+				let j = div.append('<button id="' + c.id + '">' + c.name + '</button>');
+				j.click(() => {
+					currentChannel = c;
+				});
+			}
+		});
 	}
 }
 
 client.on('message', msg => {
-	div.append('<p>' + msg.content + '</p>')
+	div.append('<p>' + msg.content + '</p>');
 });
 
 client.on('guildCreate', g => {
-	updateGuilds();
 	alert(g.name);
+	updateGuilds();
 });
 
 client.on('guildDelete', g => {
-	updateGuilds();
 	alert(g.name);
+	updateGuilds();
 });
 
 client.on('ready', () => {
