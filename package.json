@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "app.js",
   "dependencies": {
-    "discord.js": "^11.2.1",
+    "discord.js": "github:hydrabolt/discord.js",
     "electron": "latest",
     "jquery": "^3.2.1"
   }

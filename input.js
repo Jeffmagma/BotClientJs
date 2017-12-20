@@ -10,7 +10,7 @@ let currentGuild, currentChannel;
 
 input.keyup(event => {
 	if (event.keyCode === 13) {
-		client.guilds.first().defaultChannel.send(input.val());
+		currentChannel.send(input.val());
 		input.val('');
 	}
 });
@@ -36,6 +36,10 @@ client.on('guildCreate', g => {
 client.on('guildDelete', g => {
 	updateGuilds();
 	alert(g.name);
+});
+
+client.on('ready', () => {
+	client.user.setActivity("EDEN", {type: "LISTENING"});
 });
 
 const token = fs.readFileSync('.auth', 'utf8');
