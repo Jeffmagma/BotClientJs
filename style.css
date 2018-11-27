@@ -1,3 +1,15 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+
+#container {
+    display: flex;
+}
+
+#guilds #channels {
+    flex: 1 1 auto;
+}
+
+#messages_container {
+    flex-grow: 1;
+}
